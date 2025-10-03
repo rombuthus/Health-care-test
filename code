@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Интерактивный чек-лист здоровья</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .tab-button.active {
+            border-color: #3b82f6;
+            background-color: #3b82f6;
+            color: white;
+        }
+        .tab-pane {
+            display: none;
+        }
+        .tab-pane.active {
+            display: block;
+        }
+        /* Custom checkbox style */
+        input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            height: 1.25rem;
+            width: 1.25rem;
+            border: 2px solid #9ca3af;
+            border-radius: 0.375rem;
+            display: inline-block;
+            position: relative;
+            vertical-align: middle;
+            margin-right: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+        input[type="checkbox"]:checked {
+            background-color: #3b82f6;
+            border-color: #3b82f6;
+        }
+        input[type="checkbox"]:checked::after {
+            content: '✔';
+            font-size: 0.8rem;
+            color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <div class="container mx-auto p-4 sm:p-6 md:p-8 max-w-4xl">
+
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 class="text-3xl sm:text-4xl font-bold text-blue-600 mb-2">💙 Чек-листы здоровья</h1>
+            <p class="text-slate-600 max-w-2xl mx-auto">10 минут сегодня = годы здоровой жизни завтра. Используйте чек-лист как список покупок — просто отмечайте галочками то, что уже сделали!</p>
+        </header>
+
+        <!-- Tabs Navigation -->
+        <div class="flex flex-wrap justify-center gap-2 mb-6">
+            <button class="tab-button text-sm sm:text-base py-2 px-4 border-2 border-slate-300 rounded-full transition duration-300 hover:bg-blue-500 hover:text-white hover:border-blue-500 active" data-tab="men18-35">👨‍🦱 Мужчины 18-35</button>
+            <button class="tab-button text-sm sm:text-base py-2 px-4 border-2 border-slate-300 rounded-full transition duration-300 hover:bg-blue-500 hover:text-white hover:border-blue-500" data-tab="women18-35">👱‍♀️ Женщины 18-35</button>
+            <button class="tab-button text-sm sm:text-base py-2 px-4 border-2 border-slate-300 rounded-full transition duration-300 hover:bg-blue-500 hover:text-white hover:border-blue-500" data-tab="men35-60">👔 Мужчины 35-60</button>
+            <button class="tab-button text-sm sm:text-base py-2 px-4 border-2 border-slate-300 rounded-full transition duration-300 hover:bg-blue-500 hover:text-white hover:border-blue-500" data-tab="women35-60">👩 Женщины 35-60</button>
+            <button class="tab-button text-sm sm:text-base py-2 px-4 border-2 border-slate-300 rounded-full transition duration-300 hover:bg-blue-500 hover:text-white hover:border-blue-500" data-tab="men60plus">👴 Мужчины 60+</button>
+            <button class="tab-button text-sm sm:text-base py-2 px-4 border-2 border-slate-300 rounded-full transition duration-300 hover:bg-blue-500 hover:text-white hover:border-blue-500" data-tab="women60plus">👵 Женщины 60+</button>
+        </div>
+
+        <!-- Tabs Content -->
+        <main id="tab-content" class="bg-white p-6 rounded-2xl shadow-lg">
+            <!-- Dynamically generated content will go here -->
+        </main>
+        
+        <!-- Additional Information Section -->
+        <section class="mt-8 space-y-4">
+            <div class="accordion-item bg-white rounded-2xl shadow-lg">
+                <h2 class="accordion-header text-lg font-semibold p-4 cursor-pointer flex justify-between items-center" >
+                    <span>📍 Куда бежать с результатами?</span>
+                    <span class="transform transition-transform duration-300">▼</span>
+                </h2>
+                <div class="accordion-content px-4 pb-4">
+                    <p class="mb-4"><strong>Всем к терапевту в поликлинику</strong> — он оценит и направит к нужному специалисту:</p>
+                    <ul class="list-disc list-inside space-y-2 text-slate-700">
+                        <li><strong>Кардиолог</strong> — если холестерин, давление, ЭКГ плохие</li>
+                        <li><strong>Эндокринолог</strong> — если сахар, щитовидка, вес</li>
+                        <li><strong>Гинеколог</strong> — женщинам обязательно ежегодно</li>
+                        <li><strong>Уролог</strong> — мужчинам при проблемах с ПСА</li>
+                        <li><strong>Гастроэнтеролог</strong> — если печень, ЖКТ</li>
+                        <li><strong>Маммолог</strong> — при находках на маммографии/УЗИ груди</li>
+                        <li><strong>Онколог</strong> — при подозрении на рак</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="accordion-item bg-white rounded-2xl shadow-lg">
+                <h2 class="accordion-header text-lg font-semibold p-4 cursor-pointer flex justify-between items-center">
+                    <span>💰 Где сдавать и сколько стоит?</span>
+                    <span class="transform transition-transform duration-300">▼</span>
+                </h2>
+                <div class="accordion-content px-4 pb-4">
+                     <div class="space-y-4">
+                        <div>
+                            <h3 class="font-bold text-blue-600">Бесплатно (поликлиника по ОМС):</h3>
+                            <ul class="list-disc list-inside text-slate-700">
+                                <li>Почти все анализы крови и мочи</li>
+                                <li>ЭКГ, флюорография</li>
+                                <li>Маммография, ПАП-тест</li>
+                                <li>Анализ кала на кровь</li>
+                                <li>Консультации врачей</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-blue-600">Платно в лабораториях и медцентрах (примерные цены):</h3>
+                             <ul class="list-disc list-inside text-slate-700">
+                                <li>Общий анализ крови: <strong>300-500₽</strong></li>
+                                <li>Биохимия (1 показатель): <strong>200-400₽</strong></li>
+                                <li>Липидограмма: <strong>800-2000₽</strong></li>
+                                <li>Витамин D: <strong>1500-2000₽</strong></li>
+                                <li>УЗИ брюшной полости: <strong>2000-3000₽</strong></li>
+                                <li>Маммография: <strong>1500-3000₽</strong> (или <strong>БЕСПЛАТНО</strong> в поликлинике!)</li>
+                                <li>Низкодозная КТ легких: <strong>3000-5000₽</strong></li>
+                            </ul>
+                            <p class="mt-2 text-sm text-slate-500">💡 <strong>Следите за акциями!</strong> Лаборатории часто делают скидки на комплексные обследования.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item bg-white rounded-2xl shadow-lg">
+                <h2 class="accordion-header text-lg font-semibold p-4 cursor-pointer flex justify-between items-center">
+                    <span>🎗️ Онкоскрининги — главное оружие против рака</span>
+                    <span class="transform transition-transform duration-300">▼</span>
+                </h2>
+                <div class="accordion-content px-4 pb-4">
+                    <p class="mb-2">Рак, обнаруженный на 1 стадии, излечим в 90% случаев! <strong>Не ждите симптомов!</strong></p>
+                    <p class="font-bold mt-4">Ключевые скрининги:</p>
+                    <ul class="list-disc list-inside space-y-2 text-slate-700">
+                        <li><strong>Для женщин:</strong> Маммография (с 40), ПАП-тест (с 18), УЗИ малого таза.</li>
+                        <li><strong>Для мужчин:</strong> ПСА (с 45), осмотр уролога.</li>
+                        <li><strong>Для всех:</strong> Анализ кала на скрытую кровь (с 40), ФГДС (в 45), осмотр кожи, флюорография.</li>
+                        <li><strong>Для курильщиков:</strong> Низкодозная КТ лёгких (с 50).</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center mt-12 text-slate-500 text-sm">
+            <p><strong>Будьте здоровы! Ваша жизнь в ваших руках!</strong></p>
+            <p class="mt-2">Информация носит рекомендательный характер. Перед обследованием проконсультируйтесь с врачом.</p>
+        </footer>
+
+    </div>
+
+<script>
+    // Data for checklists
+    const checklists = {
+        'men18-35': {
+            title: '👨‍🦱 Мужчины 18-35 лет',
+            items: [
+                { group: 'Раз в год:', list: ['Общий анализ крови', 'Биохимия: глюкоза, холестерин, АЛТ, АСТ, креатинин, билирубин', 'Общий анализ мочи', 'Флюорография', 'ЭКГ', 'Измерение давления', 'Терапевт + стоматолог'] },
+                { group: 'Если курите:', list: ['Флюорография обязательна каждый год'] },
+                { group: 'Если пьёте алкоголь:', list: ['УЗИ брюшной полости'] },
+                { group: 'Если в стрессе:', list: ['Глюкоза крови (чаще)'] }
+            ]
+        },
+        'women18-35': {
+            title: '👱‍♀️ Женщины 18-35 лет',
+            items: [
+                { group: 'Раз в год:', list: ['Общий анализ крови', 'Биохимия: глюкоза, холестерин, АЛТ, АСТ, креатинин, билирубин', 'Общий анализ мочи', 'Флюорография', 'ЭКГ', 'Измерение давления', 'УЗИ молочных желез (1 раз в 1-2 года)', 'УЗИ органов малого таза', 'Терапевт + стоматолог', 'Гинеколог ОБЯЗАТЕЛЬНО'] },
+                { group: 'Раз в 3 года:', list: ['ПАП-тест (мазок на цитологию шейки матки)'] },
+                { group: 'Если обильные месячные:', list: ['Ферритин'] },
+                { group: 'Если курите:', list: ['Флюорография обязательна каждый год'] },
+                { group: 'Если пьёте алкоголь:', list: ['УЗИ брюшной полости'] },
+                { group: 'Если в стрессе:', list: ['Глюкоза крови (чаще)'] }
+            ]
+        },
+        'men35-60': {
+            title: '👔 Мужчины 35-60 лет',
+            items: [
+                { group: 'Раз в год:', list: ['Общий анализ крови', 'Липидограмма (развёрнутый холестерин)', 'Глюкоза крови', 'АЛТ, АСТ, билирубин', 'Креатинин, мочевина', 'Общий анализ мочи', 'Флюорография', 'ЭКГ', 'Измерение давления', 'Измерение глазного давления (с 40 лет)', 'Терапевт + стоматолог'] },
+                { group: 'Раз в 2-3 года:', list: ['УЗИ органов брюшной полости', 'ТТГ (щитовидная железа)'] },
+                { group: 'Раз в 2 года (с 40 лет):', list: ['Анализ кала на скрытую кровь (с 65 лет — ежегодно!)'] },
+                { group: 'В 45, 50, 55, 60, 64 года:', list: ['ПСА (простат-специфический антиген)'] },
+                { group: 'Однократно:', list: ['Гастроскопия в 45 лет'] },
+                { group: 'Если курите 20+ лет:', list: ['Низкодозная КТ лёгких (с 50 лет ежегодно)'] },
+                { group: 'Если пьёте алкоголь:', list: ['ГГТ, АЛТ, АСТ — каждые 6 месяцев', 'УЗИ печени — ежегодно'] },
+                { group: 'Если лишний вес:', list: ['Глюкоза + HbA1c каждые 6-12 мес', 'Липидограмма — ежегодно'] }
+            ]
+        },
+        'women35-60': {
+            title: '👩 Женщины 35-60 лет',
+            items: [
+                { group: 'Раз в год:', list: ['Общий анализ крови', 'Липидограмма (развёрнутый холестерин)', 'Глюкоза крови', 'АЛТ, АСТ, билирубин', 'Креатинин, мочевина', 'ТТГ (щитовидная железа)', 'Витамин D', 'Общий анализ мочи', 'Флюорография', 'ЭКГ', 'Измерение давления', 'Измерение глазного давления (с 40 лет)', 'УЗИ молочных желез (до 40 лет)', 'УЗИ органов малого таза', 'Терапевт + стоматолог', 'Гинеколог ОБЯЗАТЕЛЬНО'] },
+                { group: 'Раз в 2 года (с 40 лет):', list: ['МАММОГРАФИЯ — критически важно!', 'Анализ кала на скрытую кровь (с 65 лет — ежегодно!)'] },
+                { group: 'Раз в 3 года:', list: ['ПАП-тест (мазок на цитологию шейки матки, до 64 лет)'] },
+                { group: 'Раз в 5 лет (с 30 лет):', list: ['Тест на ВПЧ'] },
+                { group: 'После менопаузы:', list: ['Денситометрия (плотность костей) — каждые 2-3 года'] },
+                { group: 'Если курите 20+ лет:', list: ['Низкодозная КТ лёгких (с 50 лет ежегодно)'] },
+                { group: 'Если пьёте алкоголь:', list: ['ГГТ, АЛТ, АСТ — каждые 6 месяцев', 'УЗИ печени — ежегодно'] },
+                { group: 'Если лишний вес:', list: ['Глюкоза + HbA1c каждые 6-12 мес', 'Липидограмма — ежегодно'] }
+            ]
+        },
+        'men60plus': {
+            title: '👴 Мужчины 60+',
+            items: [
+                { group: 'Каждые 6 месяцев:', list: ['Общий анализ крови', 'Липидограмма', 'Глюкоза + HbA1c', 'Креатинин, мочевина', 'АЛТ, АСТ, билирубин', 'Общий анализ мочи', 'Терапевт'] },
+                { group: 'Раз в год:', list: ['ТТГ', 'Флюорография', 'ЭКГ', 'Анализ кала на скрытую кровь — обязательно!', 'УЗИ органов брюшной полости', 'ПСА (до 70 лет)', 'Измерение глазного давления', 'Кардиолог', 'Офтальмолог', 'Стоматолог'] },
+                { group: 'Раз в 2-3 года:', list: ['УЗИ сосудов шеи', 'ЭхоКГ (УЗИ сердца)'] },
+                { group: 'Если курите:', list: ['Низкодозная КТ лёгких ежегодно'] },
+            ]
+        },
+        'women60plus': {
+            title: '👵 Женщины 60+',
+            items: [
+                { group: 'Каждые 6 месяцев:', list: ['Общий анализ крови', 'Липидограмма', 'Глюкоза + HbA1c', 'Креатинин, мочевина', 'АЛТ, АСТ, билирубин', 'Общий анализ мочи', 'Терапевт'] },
+                { group: 'Раз в год:', list: ['ТТГ', 'Витамин D — обязательно!', 'Кальций крови', 'Флюорография', 'ЭКГ', 'Анализ кала на скрытую кровь — обязательно!', 'УЗИ органов брюшной полости', 'МАММОГРАФИЯ (до 75 лет)', 'Измерение глазного давления', 'Кардиолог', 'Гинеколог — даже после менопаузы!', 'Офтальмолог', 'Стоматолог'] },
+                { group: 'Раз в 2-3 года:', list: ['ДЕНСИТОМЕТРИЯ (остеопороз) — обязательно!', 'УЗИ сосудов шеи', 'ЭхоКГ (УЗИ сердца)'] },
+                { group: 'Если курите:', list: ['Низкодозная КТ лёгких ежегодно'] },
+            ]
+        }
+    };
+    
+    // --- App Logic ---
+    document.addEventListener('DOMContentLoaded', () => {
+        const tabs = document.querySelectorAll('.tab-button');
+        const contentContainer = document.getElementById('tab-content');
+        let storage = {};
+
+        // Function to render content for a given tab
+        function renderContent(tabId) {
+            const data = checklists[tabId];
+            if (!data) return;
+
+            let contentHTML = `
+                <div id="${tabId}" class="tab-pane active" data-tab-id="${tabId}">
+                    <div class="mb-4">
+                        <div class="flex justify-between items-center mb-1">
+                             <span class="text-sm font-medium text-slate-600">Прогресс</span>
+                             <span class="text-sm font-bold text-blue-600 progress-text">0%</span>
+                        </div>
+                        <div class="w-full bg-slate-200 rounded-full h-2.5">
+                            <div class="bg-blue-600 h-2.5 rounded-full progress-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="checklist space-y-4">
+            `;
+            
+            data.items.forEach(group => {
+                contentHTML += `<div class="group-container">
+                    <h3 class="font-semibold text-lg mb-2 text-slate-700">${group.group}</h3>
+                    <ul class="space-y-3">
+                `;
+                group.list.forEach((item, index) => {
+                    const checkboxId = `${tabId}-${group.group.replace(/[^a-zA-Z0-9]/g, '')}-${index}`;
+                    const isChecked = storage[checkboxId] ? 'checked' : '';
+                    contentHTML += `
+                        <li>
+                            <label for="${checkboxId}">
+                                <input type="checkbox" id="${checkboxId}" data-id="${checkboxId}" ${isChecked}>
+                                <span class="text-slate-700">${item}</span>
+                            </label>
+                        </li>
+                    `;
+                });
+                contentHTML += `</ul></div>`;
+            });
+            contentHTML += `</div></div>`;
+            contentContainer.innerHTML = contentHTML;
+            updateProgress(tabId);
+        }
+
+        // Function to update progress bar
+        function updateProgress(tabId) {
+            const pane = document.getElementById(tabId);
+            if (!pane) return;
+
+            const checkboxes = pane.querySelectorAll('input[type="checkbox"]');
+            const checked = pane.querySelectorAll('input[type="checkbox"]:checked');
+            const total = checkboxes.length;
+            const count = checked.length;
+            const percentage = total > 0 ? Math.round((count / total) * 100) : 0;
+            
+            const progressBar = pane.querySelector('.progress-bar');
+            const progressText = pane.querySelector('.progress-text');
+
+            if (progressBar) progressBar.style.width = `${percentage}%`;
+            if (progressText) progressText.textContent = `${percentage}%`;
+        }
+
+        // Load data from localStorage
+        function loadStorage() {
+            try {
+                const storedData = localStorage.getItem('healthChecklist');
+                storage = storedData ? JSON.parse(storedData) : {};
+            } catch (e) {
+                console.error("Could not load from localStorage", e);
+                storage = {};
+            }
+        }
+
+        // Save data to localStorage
+        function saveStorage() {
+            try {
+                localStorage.setItem('healthChecklist', JSON.stringify(storage));
+            } catch (e) {
+                console.error("Could not save to localStorage", e);
+            }
+        }
+        
+        // Event listener for tab clicks
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                renderContent(tab.dataset.tab);
+            });
+        });
+
+        // Event listener for checkbox changes (delegated)
+        contentContainer.addEventListener('change', (e) => {
+            if (e.target.matches('input[type="checkbox"]')) {
+                const id = e.target.dataset.id;
+                storage[id] = e.target.checked;
+                saveStorage();
+                const currentTabId = e.target.closest('.tab-pane').dataset.tabId;
+                updateProgress(currentTabId);
+            }
+        });
+        
+        // Accordion logic
+        const accordions = document.querySelectorAll('.accordion-item');
+        accordions.forEach(item => {
+            const header = item.querySelector('.accordion-header');
+            const content = item.querySelector('.accordion-content');
+            const icon = header.querySelector('span:last-child');
+            
+            header.addEventListener('click', () => {
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                    icon.style.transform = 'rotate(0deg)';
+                } else {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+
+        // Initial load
+        loadStorage();
+        renderContent('men18-35');
+    });
+</script>
+
+</body>
+</html>
+
